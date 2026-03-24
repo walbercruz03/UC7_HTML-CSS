@@ -8,68 +8,58 @@
   <meta name="description" content="Página da secretaria online para contato, informações sobre cursos e suporte aos alunos.">
     <title>Document</title>
 </head>
+
+<style>
+  body {
+    background-color: #e6f2ff; 
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+</style>
+
 <div class="cabeçalho-container" style="
     background-color: #f0f7ff; 
-    padding: 20px; 
-    margin-bottom: 20px; 
+    padding: 40px; 
+    margin: 80px; 
     border-radius: 15px; 
     border: 2px solid #add8e6;
     text-align: center;
     font-family: sans-serif;
-    overflow: hidden;"> <h1 style="color: #0056b3; margin-bottom: 20px; font-size: 50px;">Bem-vindo</h1>
+    position: relative; /* Necessário para o botão absolute */
+    overflow: hidden;">
+    
+    <h1 style="color: #0056b3; margin-bottom: 20px; font-size: 50px;">Bem-vindo</h1>
 
-    <div class="cabeçalho-imagem">
+    <div class="cabeçalho-imagem" style="position: relative;">
         <img src="../img/logo.png" alt="Banner Institucional" style="
             width: 100%; 
             max-width: 100%; 
             height: 600px; 
             border-radius: 10px; 
             display: block;
+            object-fit: cover; /* Ajusta a imagem sem distorcer */
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
 
-            <a href="secretaria.html" class="btn-secretaria">
-    Portal da Secretaria →
-</a>
-
-<style>
-.btn-secretaria {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
-    text-decoration: none; 
-    background-color: rgba(0, 86, 179, 0.9); 
-    color: white; 
-    padding: 15px 25px; 
-    border-radius: 50px; 
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    font-family: sans-serif;
-    transition: background-color 0.3s ease; /* transição suave */
-}
-
-/* efeito ao passar o mouse */
-.btn-secretaria:hover {
-    background-color: rgb(0, 220, 66); /* azul mais claro */
-}
-</style>
-
+        <a href="secretaria.html" class="btn-secretaria">Portal da Secretaria →</a>
     </div>
-
-
 </div>
 
-<div class="apresentação"  style="text-align: center; 
+<div class="apresentação" style="
+    text-align: center; 
     background-color: #f0f7ff; 
+    margin: 80px;
     padding: 40px; 
     display: flex; 
     align-items: center; 
-    justify-content: space-around; 
+    justify-content: space-between; 
     flex-wrap: wrap; 
     border-radius: 15px;
     border: 2px solid #add8e6;
-    font-family: sans-serif;">
+    font-family: sans-serif;
+    gap: 40px;">
 
-    <div style="max-width: 500px; text-align: left; margin: 20px;">
+    <div style="flex: 1; max-width: 500px; text-align: left;">
         <h2 style="color: #0056b3; font-size: 28px;">Formamos Desenvolvedores Full Stack</h2>
         <p style="font-size: 18px; color: #333;">
             O curso mais completo da nossa instituição. Aprenda do zero as tecnologias mais requisitadas pelo mercado e transforme sua carreira.
@@ -84,24 +74,27 @@
         </button>
     </div>
 
-    <div style="margin: 20px;">
-        <img src="../img/apresentação.png" alt="Apresentação do Curso" style="max-height: 400px; width: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <div style="flex: 1; text-align: center;">
+        <img src="../img/apresentação.png" alt="Apresentação do Curso" 
+             style="max-height: 400px; width: 100%; max-width: 500px; border-radius: 10px; 
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
     </div>
 </div>
 
 <div class="finalizacao-container" style="
     background-color: #f0f7ff; 
     padding: 40px; 
-    margin-top: 20px; 
+    margin: 80px; /* Ajustado para 80px */
     border-radius: 15px; 
     border: 2px solid #add8e6;
     font-family: sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;">
+    flex-wrap: wrap;
+    gap: 40px;">
 
-    <div style="flex: 1; min-width: 300px; margin-right: 20px;">
+    <div style="flex: 1; min-width: 300px;">
         <h2 style="color: #0056b3; margin-bottom: 15px;">Venha nos visitar em Natal!</h2>
         <p style="color: #333; font-size: 16px; line-height: 1.6;">
             Localizado em Natal/RN. <br>
@@ -109,71 +102,63 @@
             📞 <strong>Telefone:</strong> (84) 9999-9999<br>
             ✉️ <strong>E-mail:</strong> contato@instituicao.com.br
         </p>
-        
         <div style="margin-top: 25px;">
-            <a href="https://wa.me/5584921495941" target="_blank" style="
-                text-decoration: none; 
-                background: #25d366; 
-                color: white; 
-                padding: 12px 25px; 
-                border-radius: 8px; 
-                font-weight: bold; 
-                display: inline-block;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <a href="https://wa.me/5584921495941" target="_blank" style="text-decoration: none; background: #25d366; color: white; padding: 12px 25px; border-radius: 8px; font-weight: bold; display: inline-block; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                 Falar com um Consultor
             </a>
         </div>
     </div>
 
     <div style="flex: 1; min-width: 300px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #add8e6;">
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127025.2343236319!2d-35.275529!3d-5.7841695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7b3016acaacc053%3A0x5d8b404cf40fede!2sNatal%2C%20RN!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" 
-            width="100%" 
-            height="350" 
-            style="border:0; display: block;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127025.2343236319!2d-35.275529!3d-5.7841695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7b3016acaacc053%3A0x5d8b404cf40fede!2sNatal%2C%20RN!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" width="100%" height="350" style="border:0; display: block;" allowfullscreen="" loading="lazy"></iframe>
     </div>
-
 </div>
 
 <div class="feedback-container" style="
     background-color: #f0f7ff; 
     padding: 40px; 
-    margin-top: 20px; 
+    margin: 80px; /* Ajustado para 80px */
     border-radius: 15px; 
     border: 2px solid #add8e6;
     font-family: sans-serif;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 30px;">
-
+    flex-direction: column; /* Organiza os feedbacks em coluna se preferir */
+    gap: 20px;">
     
-
-    <div style="flex: 1; min-width: 320px;">
-        <h3 style="color: #0056b3; margin-top: 0; margin-bottom: 20px; font-size: 24px;">O que dizem nossos alunos 🎓</h3>
-        
-        <div style="background: #e1efff; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #0056b3;">
-            <p style="font-style: italic; color: #444; margin-bottom: 10px;">"O curso de Full Stack mudou minha vida! Em 6 meses consegui meu primeiro emprego em Natal como dev júnior. A mentoria é sensacional."</p>
-            <strong style="color: #0056b3;">— João Silva, Ex-aluno</strong>
+    <h3 style="color: #0056b3; margin-top: 0; margin-bottom: 10px; font-size: 24px; text-align: center;">O que dizem nossos alunos 🎓</h3>
+    
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 250px; background: #e1efff; padding: 20px; border-radius: 10px; border-left: 5px solid #0056b3;">
+            <p style="font-style: italic; color: #444; margin-bottom: 10px;">"O curso de Full Stack mudou minha vida! Em 6 meses consegui meu primeiro emprego em Natal."</p>
+            <strong style="color: #0056b3;">— João Silva</strong>
         </div>
-
-        <div style="background: #e1efff; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #0056b3;">
-            <p style="font-style: italic; color: #444; margin-bottom: 10px;">"A didática é incrível. Saí do absoluto zero e hoje construo aplicações completas com React e Node.js. Recomendo demais!"</p>
-            <strong style="color: #0056b3;">— Maria Oliveira, Dev Front-end</strong>
-        </div>
-
-        <div style="background: #e1efff; padding: 20px; border-radius: 10px; border-left: 5px solid #0056b3;">
-            <p style="font-style: italic; color: #444; margin-bottom: 10px;">"Projetos práticos que realmente simulam o mercado. O suporte dos professores durante o curso de Full Stack faz toda a diferença."</p>
-            <strong style="color: #0056b3;">— Ricardo Santos, Aluno Formado</strong>
+        <div style="flex: 1; min-width: 250px; background: #e1efff; padding: 20px; border-radius: 10px; border-left: 5px solid #0056b3;">
+            <p style="font-style: italic; color: #444; margin-bottom: 10px;">"A didática é incrível. Saí do absoluto zero e hoje construo aplicações completas."</p>
+            <strong style="color: #0056b3;">— Maria Oliveira</strong>
         </div>
     </div>
-
 </div>
+
+<style>
+.btn-secretaria {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    text-decoration: none; 
+    background-color: rgba(0, 86, 179, 0.9); 
+    color: white; 
+    padding: 15px 25px; 
+    border-radius: 50px; 
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-family: sans-serif;
+    transition: all 0.3s ease;
+}
+.btn-secretaria:hover {
+    background-color: rgb(0, 220, 66);
+    transform: scale(1.05);
+}
+</style>
 
 </body>
 </html>
