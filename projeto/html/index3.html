@@ -6,30 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Descrição da página -->
   <meta name="description" content="Página da secretaria online para contato, informações sobre cursos e suporte aos alunos.">
-    <title>Document</title>
+    <title>Walber</title>
 </head>
 
 <style>
   body {
-    background-color: #e6f2ff; 
+    background-color: lab(34.59% -2.5 -19.47); 
     margin: 0;
     padding: 0;
     min-height: 100vh;
   }
 </style>
 
-<div class="cabeçalho-container" style="
+<div class="cabeçalho-container borda-viva" style="
     background-color: #f0f7ff; 
     padding: 40px; 
-    margin: 80px; 
+    margin: 160px; 
     border-radius: 15px; 
-    border: 2px solid #add8e6;
+    border: 3px solid #2a93b6; /* Aumentado levemente para destacar a cor */
     text-align: center;
     font-family: sans-serif;
-    position: relative; /* Necessário para o botão absolute */
+    position: relative; 
     overflow: hidden;">
+
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; overflow: hidden; z-index: 10;">
+        <div class="efeito-fogo-linha"></div>
+    </div>
     
-    <h1 style="color: #0056b3; margin-bottom: 20px; font-size: 50px;">Bem-vindo</h1>
+    <h1 style="color: #0056b3; margin-top: 20px; margin-bottom: 20px; font-size: 50px;">Inova Tech</h1>
 
     <div class="cabeçalho-imagem" style="position: relative;">
         <img src="../img/logo.png" alt="Banner Institucional" style="
@@ -38,24 +42,79 @@
             height: 570px; 
             border-radius: 10px; 
             display: block;
-            object-fit: cover; /* Ajusta a imagem sem distorcer */
+            object-fit: cover; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
 
         <a href="secretaria.html" class="btn-secretaria">Portal da Secretaria →</a>
     </div>
 </div>
 
+<style>
+/* 1. Animação da Linha de Fogo Superior */
+@keyframes correrFogo {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.efeito-fogo-linha {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, #ff4500, #ff8c00, #fff200, #ff8c00, #ff4500, transparent);
+    position: absolute;
+    animation: correrFogo 2.5s linear infinite;
+    box-shadow: 0 0 15px #ff4500;
+}
+
+/* 2. Animação das Bordas do Container */
+@keyframes pulsarBorda {
+    0% { border-color: #2a93b6; box-shadow: 0 0 10px rgba(42, 147, 182, 0.3); }
+    33% { border-color: #3baf96; box-shadow: 0 0 20px rgba(59, 175, 150, 0.5); }
+    66% { border-color: #0056b3; box-shadow: 0 0 20px rgba(0, 86, 179, 0.5); }
+    100% { border-color: #2a93b6; box-shadow: 0 0 10px rgba(42, 147, 182, 0.3); }
+}
+
+.borda-viva {
+    animation: pulsarBorda 6s ease-in-out infinite;
+}
+
+/* Estilo do seu botão (Mantido) */
+.btn-secretaria {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    text-decoration: none; 
+    background-color: rgba(0, 86, 179, 0.9); 
+    color: white; 
+    padding: 15px 25px; 
+    border-radius: 50px; 
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-family: sans-serif;
+    transition: all 0.3s ease;
+}
+.btn-secretaria:hover {
+    background-color: rgb(0, 220, 66);
+    transform: scale(1.05);
+}
+</style>
+
+<div style="text-align: center; margin: -140px 0 -140px 0; position: relative; z-index: 10;">
+    <span style="background: #3baf96; color: white; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+        ↓
+    </span>
+</div>
+
 <div class="apresentação" style="
     text-align: center; 
     background-color: #f0f7ff; 
-    margin: 80px;
+    margin: 160px;
     padding: 40px; 
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
     flex-wrap: wrap; 
     border-radius: 15px;
-    border: 2px solid #add8e6;
+    border: 2px solid #2a93b6;
     font-family: sans-serif;
     gap: 40px;">
 
@@ -81,12 +140,18 @@
     </div>
 </div>
 
+<div style="text-align: center; margin: -140px 0 -140px 0; position: relative; z-index: 10;">
+    <span style="background: #3baf96; color: white; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+        ↓
+    </span>
+</div>
+
 <div class="finalizacao-container" style="
     background-color: #f0f7ff; 
     padding: 40px; 
-    margin: 80px; /* Ajustado para 80px */
+    margin: 160px; /* Ajustado para 80px */
     border-radius: 15px; 
-    border: 2px solid #add8e6;
+    border: 2px solid #2a93b6;
     font-family: sans-serif;
     display: flex;
     justify-content: space-between;
@@ -114,12 +179,18 @@
     </div>
 </div>
 
+<div style="text-align: center; margin: -140px 0 -140px 0; position: relative; z-index: 10;">
+    <span style="background: #3baf96; color: white; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+        ↓
+    </span>
+</div>
+
 <div class="feedback-container" style="
     background-color: #f0f7ff; 
     padding: 40px; 
-    margin: 80px; /* Ajustado para 80px */
+    margin: 160px; /* Ajustado para 160px */
     border-radius: 15px; 
-    border: 2px solid #add8e6;
+    border: 2px solid #2a93b6;
     font-family: sans-serif;
     display: flex;
     flex-direction: column; /* Organiza os feedbacks em coluna se preferir */
