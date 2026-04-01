@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Lista de compras🛒</h1>
+
+    <input type="text" id="item" placeholder="Digite um item"> 
+    
+   
+    <select id="categoria">
+        <option value="limpeza">Limpeza</option>
+        <option value="frutas">Frutas</option>
+        <option value="mercearia">Mercearia</option>
+        <option value="congelados">Congelados</option>
+    </select>
+     <button id="adicionar">Adicionar</button>
+
+    <h2>Limpeza🪠</h2>
+    <ul id="lista-limpeza" class="lista">
+       
+    </ul>
+
+    <h2>Frutas🍉</h2>
+    <ul id="lista-frutas" class="lista">
+      
+    </ul>
+
+    <h2>Mercearia🧀</h2>
+    <ul id="lista-mercearia" class="lista">
+       
+    </ul>
+
+    <h2>Congelados🧊</h2>
+    <ul id="lista-congelados" class="lista">
+       
+    </ul>
+
+
+    <script>
+        const botaoAdicionar = document.getElementById("adicionar");
+
+        botaoAdicionar.addEventListener("click", () => {
+        const select = document.getElementById("categoria");
+        const texto =  document.getElementById("item").value;
+
+        if (texto === ""){
+            alert("Por favor, digite um item para adicionar à lista.");
+            return;
+        }
+
+        const item = document.createElement("li");
+
+        const lista = document.getElementById(`lista-${select.value}`);
+        lista.appendChild(item);
+
+        item.textContent = texto + " ";
+
+        // 2. Cria o botão de excluir (X)
+    const botaoExcluir = document.createElement("button");
+    botaoExcluir.textContent = "X";
+    botaoExcluir.style.marginLeft = "10px"; // Dá um espaço entre o texto e o X
+    botaoExcluir.style.color = "red";       // Deixa o X vermelho
+    botaoExcluir.style.cursor = "pointer";
+
+    // 3. Adiciona a função de remover ao clicar no X
+    botaoExcluir.onclick = function() {
+        item.remove(); // Remove o elemento <li> inteiro
+    };
+
+    // 4. Coloca o botão dentro do item da lista
+    item.appendChild(botaoExcluir);
+
+         texto =  document.getElementById("item").value = "";
+        });
+             
+    </script>
+
+</body>
+</html>
