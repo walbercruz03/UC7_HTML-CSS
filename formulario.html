@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document/walber</title>
+</head>
+<body>
+    <h1>Menu Paciente</h1>
+    <div>
+    <div class="formulario">
+    <label>Nome:</label>
+    <input id="nome" type="text" placeholder="Digite seu nome">
+    <br>
+    <label>Email:</label>
+    <input id="email" type="email" placeholder="Digite seu email">
+    <br>
+    <label>Data de Nascimento:</label>
+    <input id="nascimento" type="date" placeholder="Digite sua data de nascimento">
+    <br>
+    <label>Telefone:</label>
+    <input id="telefone" type="tel" placeholder="Digite seu telefone">
+    </div>
+        <button id="enviar">Enviar</button>
+    </div>
+
+    <h2>Informações Pacientes</h2>
+
+    <table borde="1">
+        <thead>
+            <tr>
+                <th>nome</th>
+                <th>email</th>
+                <th>data de nascimento</th> 
+                <th>telefone</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabela-pacientes">
+    </table>
+
+     <script>
+        document.getElementById("enviar").addEventListener("click", function () {
+
+            // pegar valores
+            let nome = document.getElementById("nome").value;
+            let email = document.getElementById("email").value;
+            let nascimento = document.getElementById("nascimento").value;
+            let telefone = document.getElementById("telefone").value;
+
+            // criar linha
+            let tabela = document.getElementById("tabela-pacientes");
+
+            let linha = document.createElement("tr");
+
+            linha.innerHTML = `
+                <td>${nome}</td>
+                <td>${email}</td>
+                <td>${nascimento}</td>
+                <td>${telefone}</td>
+            `;
+
+            tabela.appendChild(linha);
+
+            // limpar campos
+            document.getElementById("nome").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("nascimento").value = "";
+            document.getElementById("telefone").value = "";
+
+            if (nome === "" || email === "" || nascimento === "" || telefone === "") {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+        });
+    </script>
+
+</body>
+</html>

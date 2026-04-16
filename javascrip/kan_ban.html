@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+    <style>
+  body { 
+      font-family: Arial, sans-serif; 
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    /* Centralizar formulário */
+    .formulario {
+      text-align: center;
+      margin: 20px auto;
+      padding: 15px;
+      background: #fff;
+      border-radius: 8px;
+      width: 60%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    input, select {
+      margin: 5px;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    /* Botões principais */
+    #adicionar-tarefa {
+      background-color: #28a745; /* verde */
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    #limpar-tarefas {
+      background-color: #dc3545; /* vermelho */
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    /* Botões dentro das tarefas */
+    .buttons button {
+      border: none;
+      padding: 5px 8px;
+      border-radius: 4px;
+      color: white;
+    }
+
+    .buttons .editar {
+      background-color: #28a745; /* verde */
+    }
+
+    .buttons .excluir {
+      background-color: #dc3545; /* vermelho */
+    }
+
+    /* Quadro Kanban */
+    .kanban-board {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+    }
+
+    .kanban-column {
+      background-color: #f4f4f4;
+      border: 1px solid #ccc;
+      min-height: 250px;
+      width: 30%;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .kanban-column h2 { text-align: center; }
+
+    ul { list-style: none; padding: 0; min-height: 200px; }
+
+    li {
+      background: white;
+      margin: 5px 0;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dragging { opacity: 0.5; }
+
+    .buttons .editar {
+  background-color: #28a745; /* verde */
+  color: white;
+}
+
+.buttons .excluir {
+  background-color: #dc3545; /* vermelho */
+  color: white;
+}
+
+  </style>
+</head>
+<body>
+  <h1>Kanban Board</h1>
+
+  <div>
+    <h2>Título da Tarefa</h2>
+    <input type="text" id="titulo" placeholder="Digite a tarefa">
+    <h2>Descrição da Tarefa</h2>
+    <input type="text" id="descricao" placeholder="Digite a descrição da tarefa">
+    <select id="prioridade">
+      <option value="baixa">Baixa</option>
+      <option value="media">Média</option>
+      <option value="alta">Alta</option>
+    </select>
+    <select id="status">
+      <option value="todo-list">A Fazer</option>
+      <option value="doing-list">Fazendo</option>
+      <option value="done-list">Concluído</option>
+    </select>
+    <br><br>
+    <button id="adicionar-tarefa">Adicionar</button>
+    <button id="limpar-tarefas">Limpar Tarefas</button>
+  </div>
+
+  <div class="kanban-board">
+    <div class="kanban-column">
+      <h2>A Fazer</h2>
+      <ul id="todo-list"></ul>
+    </div>
+    <div class="kanban-column">
+      <h2>Fazendo</h2>
+      <ul id="doing-list"></ul>
+    </div>
+    <div class="kanban-column">
+      <h2>Concluído</h2>
+      <ul id="done-list"></ul>
+    </div>
+  </div>
+
+  <script>
+    const botaoAdicionar = document.getElementById("adicionar-tarefa");
+    const botaoLimpar = document.getElementById("limpar-tarefas");
+
+    botaoAdicionar.addEventListener("click", () => {
+      const titulo = document.getElementById("titulo").value;
+      const descricao = document.getElementById("descricao").value;
+      const prioridade = document.getElementById("prioridade").value;
+      const status = document.getElementById("status").value;
+
+      if (titulo === "" || descricao === "") {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+
+      const tarefa = document.createElement("li");
+      tarefa.textContent = `${titulo} - ${descricao} (Prioridade: ${prioridade})`;
+      tarefa.setAttribute("draggable", "true");
+      tarefa.id = "task-" + Date.now();
+
+      // Botões editar e excluir
+      const btns = document.createElement("div");
+      btns.classList.add("buttons");
+
+      const btnEditar = document.createElement("button");
+      btnEditar.textContent = "Editar";
+      btnEditar.onclick = () => {
+        const novoTitulo = prompt("Novo título:", titulo);
+        const novaDescricao = prompt("Nova descrição:", descricao);
+        if (novoTitulo && novaDescricao) {
+          tarefa.firstChild.textContent = `${novoTitulo} - ${novaDescricao} (Prioridade: ${prioridade})`;
+        }
+      };
+
+      const btnExcluir = document.createElement("button");
+      btnExcluir.textContent = "Excluir";
+      btnExcluir.onclick = () => tarefa.remove();
+
+      btns.appendChild(btnEditar);
+      btns.appendChild(btnExcluir);
+      tarefa.appendChild(btns);
+
+      // Eventos de arrastar
+      tarefa.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", tarefa.id);
+        tarefa.classList.add("dragging");
+      });
+      tarefa.addEventListener("dragend", () => {
+        tarefa.classList.remove("dragging");
+      });
+
+      document.getElementById(status).appendChild(tarefa);
+    });
+
+    botaoLimpar.addEventListener("click", () => {
+      document.getElementById("todo-list").innerHTML = "";
+      document.getElementById("doing-list").innerHTML = "";
+      document.getElementById("done-list").innerHTML = "";
+    });
+
+    // Configura colunas para receber drop
+    const listas = document.querySelectorAll(".kanban-column ul");
+    listas.forEach(lista => {
+      lista.addEventListener("dragover", (e) => e.preventDefault());
+      lista.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const id = e.dataTransfer.getData("text/plain");
+        const tarefa = document.getElementById(id);
+        lista.appendChild(tarefa);
+      });
+    });
+  </script>
+</body>
+</html>
