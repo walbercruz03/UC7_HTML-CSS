@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document/walber</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        .acoes { display: flex; gap: 5px; }
+
+        body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #43cea2, #185a9d); /* fundo com gradiente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+.formulario {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.formulario label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.formulario input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button#enviar {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button#enviar:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 8px;
+    text-align: center;
+}
+
+.acoes button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-editar {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-remover {
+    background-color: #f44336;
+    color: white;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Menu Paciente</h1>
+    <div>
+    <div class="formulario">
+    <label>Nome:</label>
+    <input id="nome" type="text" placeholder="Digite seu nome">
+    <br>
+    <label>Email:</label>
+    <input id="email" type="email" placeholder="Digite seu email">
+    <br>
+    <label>Data de Nascimento:</label>
+    <input id="nascimento" type="date" placeholder="Digite sua data de nascimento">
+    <br>
+    <label>Telefone:</label>
+    <input id="telefone" type="tel" placeholder="Digite seu telefone">
+    <br>
+    <label>Altura:</label>
+    <input id="altura" type="number" placeholder="Digite sua altura">
+    <br>
+    <label>Peso:</label>
+    <input id="peso" type="number" placeholder="Digite seu peso">
+    </div>
+        <button id="enviar">Enviar</button>
+    </div>
+
+    <h2>Informações Pacientes</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>nome</th>
+                <th>email</th>
+                <th>data de nascimento</th> 
+                <th>telefone</th>
+                <th>altura</th>
+                <th>peso</th>
+                <th>IMC</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabela-pacientes">
+    </table>
+
+     <script>
+      const tabela = document.getElementById("tabela-pacientes");
+
+        document.getElementById("enviar").addEventListener("click", function () {
+            let nome = document.getElementById("nome").value;
+            let email = document.getElementById("email").value;
+            let nascimento = document.getElementById("nascimento").value;
+            let nascimentoFormatado = nascimento.split("-").reverse().join("/")
+            let telefone = document.getElementById("telefone").value;
+            let altura = Number(document.getElementById("altura").value);
+            let peso = Number(document.getElementById("peso").value);
+
+            if (!nome || !email || !nascimento || !telefone || !altura || !peso) {
+                return alert("Preencha todos os campos!");
+            }
+
+            if (altura <= 0 || peso <= 0) {
+                return alert("Altura e peso devem ser maiores que zero!");
+            }
+
+            let imc = (peso / (altura * altura)).toFixed(2);
+
+            let linha = document.createElement("tr");
+            linha.innerHTML = `
+                <td>${nome}</td>
+                <td>${email}</td>
+                <td>${nascimentoFormatado}</td>
+                <td>${telefone}</td>
+                <td>${altura}</td>
+                <td>${peso}</td>
+                <td>${imc}</td>
+                <td class="acoes">
+                    <button class="btn-editar">Editar</button>
+                    <button class="btn-remover">Remover</button>
+                </td>
+            `;
+
+            tabela.appendChild(linha);
+            limparFormulario();
+        });
+        
+        function limparFormulario() {
+        document.getElementById("nome").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("nascimento").value = "";
+        document.getElementById("telefone").value = "";
+        document.getElementById("altura").value = "";
+        document.getElementById("peso").value = "";
+    }
+    
+
+        // Delegação de eventos: escuta cliques na tabela toda
+        tabela.addEventListener("click", function (e) {
+            // Remover
+            if (e.target.classList.contains("btn-remover")) {
+                e.target.closest("tr").remove();
+                limparFormulario();
+            }
+
+            // Editar
+            if (e.target.classList.contains("btn-editar")) {
+                let linha = e.target.closest("tr");
+                let colunas = linha.querySelectorAll("td");
+                
+                // Preenche os campos do formulário com os dados da linha
+                document.getElementById("nome").value = colunas[0].innerText ;
+                document.getElementById("email").value = colunas[1].innerText;
+                document.getElementById("nascimento").value = colunas[2].innerText;
+                document.getElementById("telefone").value = colunas[3].innerText;
+                document.getElementById("altura").value = colunas[4].innerText;
+                document.getElementById("peso").value = colunas[5].innerText;
+
+                // Remove a linha antiga após editar
+                linha.remove();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #43cea2, #185a9d); /* fundo em gradiente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #43cea2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #36a085;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Login Nutri</h1>
+    <form>
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" placeholder="Digite sua matrícula">
+        <br>
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
+        <br>
+        <input type="submit" value="Entrar">
+        <br>
+    </form>
+
+    <script>
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Impede o envio do formulário
+
+            const matricula = document.getElementById("matricula").value;
+            const senha = document.getElementById("senha").value;
+
+            // Aqui você pode adicionar a lógica de autenticação, por exemplo:
+            if (matricula === "nutri" && senha === "123") {
+                alert("Login bem-sucedido!");
+                // Redirecionar para a página principal do nutricionista
+                window.location.href = "formulario.html";
+            } else {
+                alert("Matrícula ou senha incorretos. Tente novamente.");
+            }
+        });
+        </script>
+
+</body>
+</html>
