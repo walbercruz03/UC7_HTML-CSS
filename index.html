@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Olá, seja bem-vindo ao meu portfólio!</h1>
+    <p>Este é um espaço dedicado a mostrar meus projetos e habilidades.</p>
+    <label>Nome:</label>
+    <input type="text" id="nome" placeholder="Digite seu nome">
+    <br>
+    <label>Email:</label>
+    <input type="text" id="email" placeholder="Digite seu email">
+    <br> 
+    <label>Data de Nascimento:</label>
+    <input type="date" id="data-nascimento" placeholder="Digite sua data de nascimento">
+    <br>
+    <button id="enviar">enviar </button>
+</body>
+
+<script>
+    const enviarbtn = document.getElementById("enviar");
+
+    enviarbtn.addEventListener("click", function() {
+        let nome = document.getElementById("nome").value;
+        let email = document.getElementById("email").value;
+        let dataNascimento = document.getElementById("data-nascimento").value;
+
+        if (nome === "" ){
+            alert("Por favor, preencha o campo nome.");
+            return;
+        }
+        window.location.href=`index2.html?nome=${nome}&email=${email}&data=${dataNascimento}`;
+    })
+</script>
+</html> 
