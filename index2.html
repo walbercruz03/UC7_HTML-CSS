@@ -6,6 +6,34 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Dados Recebidos</h1>
+    <h1>bem-vindo</h1>
+    <div class="login">
+    <label>Email:</label>
+    <input type="text" id="email" placeholder="Digite seu email">
+    <br>
+    <label>Senha:</label>
+    <input type="password" id="senha" placeholder="Digite sua senha">
+    <button onclick="Entrar()">Entrar</button>
+    <p>Cadastre-se<a href="index.html">Clique aqui</a></p>
+    </div>
 </body>
+<script>
+    function Entrar(){
+        let email = document.getElementById("email").value;
+        let senha = document.getElementById("senha").value;
+
+        let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+        let usuario = usuarios.find(u => u.email === email && u.senha === senha);
+
+        
+        
+        if(usuario){
+            alert("Login realizado com sucesso! Bem-vindo, " + usuario.nome);
+            window.location.href="index3.html"
+        } else {
+            alert("Email ou senha inválidos!");
+        }
+    
+}
+</script>
 </html>

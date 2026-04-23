@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
 </head>
 <body>
     <h1>Olá, seja bem-vindo ao meu portfólio!</h1>
@@ -17,6 +18,9 @@
     <label>Data de Nascimento:</label>
     <input type="date" id="data-nascimento" placeholder="Digite sua data de nascimento">
     <br>
+    <label>Senha:</label>
+    <input type="password" id="senha" placeholder="Digite sua senha">
+    <br>
     <button id="enviar">enviar </button>
 </body>
 
@@ -27,11 +31,28 @@
         let nome = document.getElementById("nome").value;
         let email = document.getElementById("email").value;
         let dataNascimento = document.getElementById("data-nascimento").value;
+        let senha = document.getElementById("senha").value;
 
         if (nome === "" ){
             alert("Por favor, preencha o campo nome.");
             return;
         }
+
+        // criando objeo json
+        let usuario = {
+            nome: nome,
+            email: email,
+            dataNascimento: dataNascimento,
+            senha: senha
+        };
+
+        // salvando no localstorage
+        let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+        usuarios.push(usuario);
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+        alert ("Cadastro realizado com sucesso!")
+
         window.location.href=`index2.html?nome=${nome}&email=${email}&data=${dataNascimento}`;
     })
 </script>
