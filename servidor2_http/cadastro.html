@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cadastro de Aluno</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/aluno" method="POST">
+    <h2>Cadastro</h2>
+
+    <input type="text" name="matricula" placeholder="Matrícula" required>
+    <input type="text" name="nome" placeholder="Nome" required>
+    <input type="text" name="telefone" placeholder="Telefone" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="text" name="curso" placeholder="Curso" required>
+
+    <button type="submit">Cadastrar</button>
+</form>
+
+</body>
+</html>
