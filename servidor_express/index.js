@@ -1,13 +1,18 @@
 import express from "express"
 import path from "path"
-
+import morgan from "morgan"
+import dontenv from "dotenv"
 import alunosRoutes from './src/routers/alunos.js'
 import cursosRoutes from './src/routers/cursos.js'
 import matriculasRoutes from './src/routers/matriculas.js'
 
+dontenv.config()
+
 const app = express()
-const PORT = 3000
-const HOST = "localhost"
+
+const PORT = process.env.PORT || 3000
+const HOST = process.env.HOST || "localhost"
+
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
