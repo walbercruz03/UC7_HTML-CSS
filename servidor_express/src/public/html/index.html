@@ -144,23 +144,65 @@
         }
 
         // --- FUNÇÕES DE EXIBIÇÃO DE FORMULÁRIOS ---
-        function mostrarFormularioAluno() {
-            document.getElementById('view-area').innerHTML = `
-                <h2>Cadastrar Novo Aluno</h2>
-                <form onsubmit="enviarFormulario(event, 'alunos')">
-                    <p>Nome do Aluno: <input type="text" name="nome" required placeholder="Ex: João da Silva"></p>
-                    <p>Email: <input type="email" name="email" required placeholder="Ex: joao@email.com"></p>
-                    <button type="submit">Salvar Aluno</button>
-                </form>
-            `;
+        async function mostrarFormularioAluno() {
+            const view = document.getElementById('view-area');
+            view.innerHTML = `<h2>Carregando... ⏳</h2>`;
+            
+            try {
+                // Busca a lista de cursos reais da sua API para preencher as opções de vínculo
+                const resCursos = await fetch('/cursos');
+                const cursos = await resCursos.json();
+                
+                if (!Array.isArray(cursos)) {
+                    throw new Error(cursos.erro || "O servidor não retornou uma lista válida de cursos.");
+                }
+
+                // Impede o erro de "caixa vazia" se você não tiver cursos cadastrados ainda
+                if (cursos.length === 0) {
+                    view.innerHTML = `
+                        <h2>Cadastrar Novo Aluno</h2>
+                        <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                            <strong>⚠️ Atenção:</strong> Não há cursos cadastrados no sistema.<br><br>
+                            Você precisa <a href="#" onclick="mostrarFormularioCurso()" style="color: #721c24; font-weight: bold;">cadastrar pelo menos um curso</a> antes de cadastrar um aluno.
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Garante que o ID e o nome do curso sejam lidos independente da letra maiúscula/minúscula vinda do MySQL
+                let opcoesCursos = cursos.map(c => {
+                    let id = c.idCurso || c.idcurso || c.id;
+                    return `<option value="${id}">${c.curso || c.nome}</option>`;
+                }).join('');
+                
+                view.innerHTML = `
+                    <h2>Cadastrar Novo Aluno</h2>
+                    <form onsubmit="enviarFormulario(event, 'alunos')">
+                        <p>Nome do Aluno: <input type="text" name="nome" required placeholder="Ex: João da Silva" minlength="3"></p>
+                        <p>Email: <input type="email" name="email" required placeholder="Ex: joao@email.com"></p>
+                        <p>Telefone: <input type="text" name="telefone" required placeholder="Ex: 11999999999" maxlength="11"></p>
+                        <p>Vincular a um Curso: <select name="idCurso_aluno" required><option value="" disabled selected>Escolha um curso...</option>${opcoesCursos}</select></p>
+                        <button type="submit">Salvar Aluno</button>
+                    </form>
+                `;
+            } catch (error) {
+                view.innerHTML = `<h2 style="color:red;">Erro ao carregar os cursos</h2><p>${error.message}</p>`;
+            }
         }
 
         function mostrarFormularioCurso() {
             document.getElementById('view-area').innerHTML = `
                 <h2>Cadastrar Novo Curso</h2>
                 <form onsubmit="enviarFormulario(event, 'cursos')">
-                    <p>Nome do Curso: <input type="text" name="nome" required placeholder="Ex: Programação Web"></p>
+                    <p>Código: <input type="number" name="cod" required placeholder="Ex: 101"></p>
+                    <p>Nome do Curso: <input type="text" name="curso" required placeholder="Ex: Programação Web" minlength="3"></p>
                     <p>Carga Horária (horas): <input type="number" name="ch" required placeholder="Ex: 40"></p>
+                    <p>Tipo: <select name="tipo" required>
+                        <option value="" disabled selected>Escolha o tipo...</option>
+                        <option value="Presencial">Presencial</option>
+                        <option value="EAD">EAD</option>
+                        <option value="Híbrido">Híbrido</option>
+                    </select></p>
                     <button type="submit">Salvar Curso</button>
                 </form>
             `;
@@ -176,18 +218,22 @@
                 const alunos = await resAlunos.json();
                 const cursos = await resCursos.json();
 
+                if (!Array.isArray(alunos) || !Array.isArray(cursos)) {
+                    throw new Error("Erro ao carregar os dados. O servidor não retornou listas válidas.");
+                }
+
                 // Se não houver aluno ou curso, avisa o usuário que é preciso cadastrar antes
                 if (alunos.length === 0 || cursos.length === 0) {
                     view.innerHTML = `
                         <h2>Fazer Matrícula</h2>
-                        <p style="color: #e74c3c; font-weight: bold; margin-top: 15px;">⚠️ Atenção: É necessário cadastrar pelo menos um aluno e um curso antes de realizar uma matrícula.</p>
+                        <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-top: 15px;"><strong>⚠️ Atenção:</strong> É necessário cadastrar pelo menos um aluno e um curso antes de realizar uma matrícula.</div>
                     `;
                     return;
                 }
 
                 // Cria as opções (options) com base no JSON recebido
                 let opcoesAlunos = alunos.map(a => `<option value="${a.nome}">${a.nome}</option>`).join('');
-                let opcoesCursos = cursos.map(c => `<option value="${c.nome}">${c.nome}</option>`).join('');
+                let opcoesCursos = cursos.map(c => `<option value="${c.curso || c.nome}">${c.curso || c.nome}</option>`).join('');
 
                 view.innerHTML = `
                     <h2>Fazer Matrícula</h2>
@@ -210,6 +256,11 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries()); // Transforma os dados em JSON
 
+            // Garante que os números enviados sejam tratados como numéricos e não como texto (Strings)
+            if (data.cod) data.cod = parseInt(data.cod);
+            if (data.ch) data.ch = parseInt(data.ch);
+            if (data.idCurso_aluno) data.idCurso_aluno = parseInt(data.idCurso_aluno);
+
             try {
                 const response = await fetch(`/${rota}`, {
                     method: 'POST',
@@ -223,10 +274,10 @@
                     alert(result.mensagem || 'Cadastro realizado com sucesso!');
                     carregarDados(rota); // Redireciona automaticamente para a lista
                 } else {
-                    alert('Erro: ' + (result.erro || 'Falha no cadastro!'));
+                    alert('⚠️ Erro de Validação: ' + (result.erro || JSON.stringify(result)));
                 }
             } catch (error) {
-                alert('Erro de conexão: ' + error.message);
+                alert('⚠️ Erro de conexão com o servidor: ' + error.message);
             }
         }
 
@@ -238,6 +289,10 @@
                 const response = await fetch(`/${rota}`);
                 const data = await response.json();
                 
+                if (!Array.isArray(data)) {
+                    throw new Error(data.erro || "O servidor não retornou uma lista válida.");
+                }
+
                 let titulo = rota.charAt(0).toUpperCase() + rota.slice(1);
                 let html = `<h2>Lista de ${titulo}</h2>`;
                 

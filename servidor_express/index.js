@@ -2,7 +2,7 @@ import express from "express"
 import path from "path"
 import morgan from "morgan"
 import dotenv from "dotenv"
-import bdConexao from "bdConexao"
+// import bdConexao from "bdConexao"
 import alunosRoutes from './src/routers/alunos.js'
 import cursosRoutes from './src/routers/cursos.js'
 import matriculasRoutes from './src/routers/matriculas.js'
