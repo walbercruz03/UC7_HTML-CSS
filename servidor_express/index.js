@@ -1,12 +1,14 @@
 import express from "express"
 import path from "path"
 import morgan from "morgan"
-import dontenv from "dotenv"
+import dotenv from "dotenv"
+import bdConexao from "bdConexao"
 import alunosRoutes from './src/routers/alunos.js'
 import cursosRoutes from './src/routers/cursos.js'
 import matriculasRoutes from './src/routers/matriculas.js'
+import bdConexao from "./src/config/database.js"
 
-dontenv.config()
+dotenv.config()
 
 const app = express()
 
