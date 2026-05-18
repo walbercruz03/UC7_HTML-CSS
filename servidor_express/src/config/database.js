@@ -5,11 +5,11 @@ dotenv.config();
 
 
 const bdConexao = mysql.createConnection({
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
+    host: '127.0.0.1', // Forçando o IP em vez de 'localhost' para evitar o erro GSSAPI
+    port: process.env.DATABASE_PORT || 3306,
+    user: process.env.DATABASE_USER || 'root',
+    password: process.env.DATABASE_PASSWORD || '', // Coloque a senha do seu banco aqui, caso tenha
+    database: process.env.DATABASE_NAME || 'bd_academico',
     charset: "utf8mb4",
     multipleStatements: true
 });
