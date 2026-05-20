@@ -100,20 +100,25 @@
                 const cursos = await resCursos.json();
                 const matriculas = await resMatriculas.json();
 
+                // Validação de segurança: Verifica se é um array antes de contar o length, senão define como 0
+                const totalAlunos = Array.isArray(alunos) ? alunos.length : 0;
+                const totalCursos = Array.isArray(cursos) ? cursos.length : 0;
+                const totalMatriculas = Array.isArray(matriculas) ? matriculas.length : 0;
+
                 view.innerHTML = `
                     <h2>Dashboard</h2>
                     <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; margin-top: 15px;">
                         <div style="flex: 1; background: #3498db; color: white; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                             <h3>Total de Alunos</h3>
-                            <p style="font-size: 28px; font-weight: bold; margin-top: 10px;">${alunos.length}</p>
+                            <p style="font-size: 28px; font-weight: bold; margin-top: 10px;">${totalAlunos}</p>
                         </div>
                         <div style="flex: 1; background: #2ecc71; color: white; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                             <h3>Total de Cursos</h3>
-                            <p style="font-size: 28px; font-weight: bold; margin-top: 10px;">${cursos.length}</p>
+                            <p style="font-size: 28px; font-weight: bold; margin-top: 10px;">${totalCursos}</p>
                         </div>
                         <div style="flex: 1; background: #e74c3c; color: white; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                             <h3>Total de Matrículas</h3>
-                            <p style="font-size: 28px; font-weight: bold; margin-top: 10px;">${matriculas.length}</p>
+                            <p style="font-size: 28px; font-weight: bold; margin-top: 10px;">${totalMatriculas}</p>
                         </div>
                     </div>
                     
@@ -130,7 +135,7 @@
                         labels: ['Alunos', 'Cursos', 'Matrículas'],
                         datasets: [{
                             label: 'Quantidade Cadastrada',
-                            data: [alunos.length, cursos.length, matriculas.length],
+                            data: [totalAlunos, totalCursos, totalMatriculas],
                             backgroundColor: ['rgba(52, 152, 219, 0.7)', 'rgba(46, 204, 113, 0.7)', 'rgba(231, 76, 60, 0.7)'],
                             borderColor: ['#2980b9', '#27ae60', '#c0392b'],
                             borderWidth: 1

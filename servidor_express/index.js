@@ -7,6 +7,8 @@ import alunosRoutes from './src/routers/alunos.js'
 import cursosRoutes from './src/routers/cursos.js'
 import matriculasRoutes from './src/routers/matriculas.js'
 import bdConexao from "./src/config/database.js"
+import sequelize from "./src/config/orm.js"
+
 
 dotenv.config()
 
