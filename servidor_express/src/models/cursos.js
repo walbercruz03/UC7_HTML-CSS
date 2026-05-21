@@ -30,3 +30,38 @@ export const createCurso = (cursoData) => {
         );
     });
 };
+
+// Atualizar os dados do curso no banco (focado em atualizar o nome do curso)
+export const updateCurso = (id, cursoData) => {
+    return new Promise((resolve, reject) => {
+        const { curso } = cursoData;
+        bdConexao.query(
+            'UPDATE cursos SET curso = ? WHERE cod = ?',
+            [curso, id],
+            (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            }
+        );
+    });
+};
+
+// Excluir um curso do banco
+export const deleteCurso = (id) => {
+    return new Promise((resolve, reject) => {
+        bdConexao.query(
+            'DELETE FROM cursos WHERE cod = ?',
+            [id],
+            (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            }
+        );
+    });
+};

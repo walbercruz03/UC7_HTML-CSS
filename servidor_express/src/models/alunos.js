@@ -29,3 +29,38 @@ export const createAluno = (alunoData) => {
         );
     });
 };
+
+// Atualizar os dados do aluno no banco (focado em atualizar o nome)
+export const updateAluno = (id, alunoData) => {
+    return new Promise((resolve, reject) => {
+        const { nome } = alunoData;
+        bdConexao.query(
+            'UPDATE alunos SET nome = ? WHERE matricula = ?',
+            [nome, id],
+            (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            }
+        );
+    });
+};
+
+// Excluir um aluno do banco
+export const deleteAluno = (id) => {
+    return new Promise((resolve, reject) => {
+        bdConexao.query(
+            'DELETE FROM alunos WHERE matricula = ?',
+            [id],
+            (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            }
+        );
+    });
+};

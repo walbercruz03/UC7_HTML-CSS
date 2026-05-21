@@ -309,11 +309,19 @@
                     let colunas = Object.keys(data[0]);
                     html += `<thead><tr>`;
                     colunas.forEach(col => { html += `<th>${col.toUpperCase()}</th>`; });
+                    html += `<th>AÇÕES</th>`;
                     html += `</tr></thead><tbody>`;
                     
                     data.forEach(item => {
                         html += `<tr>`;
                         colunas.forEach(col => { html += `<td>${item[col]}</td>`; });
+                        
+                        // Identifica o ID para as rotas (pode ser matricula, cod ou id)
+                        let id = item.matricula || item.cod || item.id;
+                        html += `<td>
+                            <button onclick="editarItem('${rota}', '${id}')" style="padding: 6px; font-size: 13px; background-color: #f39c12; margin-right: 5px;">Editar</button>
+                            <button onclick="excluirItem('${rota}', '${id}')" style="padding: 6px; font-size: 13px; background-color: #e74c3c;">Excluir</button>
+                        </td>`;
                         html += `</tr>`;
                     });
                     html += `</tbody></table>`;
@@ -322,6 +330,55 @@
                 view.innerHTML = html;
             } catch (error) {
                 view.innerHTML = `<h2 style="color:red;">Erro ao buscar dados</h2><p>${error.message}</p>`;
+            }
+        }
+
+        async function excluirItem(rota, id) {
+            if (confirm('Tem certeza que deseja excluir este registro?')) {
+                try {
+                    const resposta = await fetch(`/${rota}/${id}`, { method: 'DELETE' });
+                    if (resposta.ok) {
+                        alert('Excluído com sucesso!');
+                        carregarDados(rota); // Recarrega a tabela atual
+                    } else {
+                        const erro = await resposta.json();
+                        alert('Erro ao excluir: ' + (erro.erro || 'Desconhecido'));
+                    }
+                } catch (error) {
+                    alert('Erro de conexão: ' + error.message);
+                }
+            }
+        }
+
+        async function editarItem(rota, id) {
+            if (rota === 'matriculas') {
+                alert('Edição de matrículas não está disponível ainda.');
+                return;
+            }
+
+            const novoValor = prompt('Digite o novo valor (Nome do Aluno / Nome do Curso):');
+            if (novoValor && novoValor.trim() !== '') {
+                let dados = {};
+                // A API espera chaves diferentes dependendo de onde vem a requisição
+                if (rota === 'alunos') dados = { nome: novoValor };
+                if (rota === 'cursos') dados = { curso: novoValor };
+                
+                try {
+                    const resposta = await fetch(`/${rota}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(dados)
+                    });
+                    if (resposta.ok) {
+                        alert('Atualizado com sucesso!');
+                        carregarDados(rota); // Recarrega a tabela atual
+                    } else {
+                        const erro = await resposta.json();
+                        alert('Erro ao atualizar: ' + (erro.erro || 'Desconhecido'));
+                    }
+                } catch (error) {
+                    alert('Erro de conexão: ' + error.message);
+                }
             }
         }
 

@@ -48,3 +48,28 @@ export const cadastrarAluno = async (req, res) => {
         res.status(500).json({ erro: 'Erro interno ao salvar o aluno no banco. Verifique se o idCurso_aluno existe na tabela de cursos.' });
     }
 };
+
+export const atualizarAluno = async (req, res) => {
+    const { id } = req.params;
+    const dadosAtualizados = req.body;
+
+    try {
+        await AlunoModel.updateAluno(id, dadosAtualizados);
+        res.status(200).json({ mensagem: 'Aluno atualizado com sucesso!' });
+    } catch (erro) {
+        console.error("Erro ao atualizar aluno:", erro);
+        res.status(500).json({ erro: 'Erro interno ao atualizar o aluno no banco.' });
+    }
+};
+
+export const deletarAluno = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await AlunoModel.deleteAluno(id);
+        res.status(200).json({ mensagem: 'Aluno deletado com sucesso!' });
+    } catch (erro) {
+        console.error("Erro ao deletar aluno:", erro);
+        res.status(500).json({ erro: 'Erro interno ao deletar o aluno no banco.' });
+    }
+};
