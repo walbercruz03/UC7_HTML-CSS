@@ -176,7 +176,7 @@
                 
                 // Garante que o ID e o nome do curso sejam lidos independente da letra maiúscula/minúscula vinda do MySQL
                 let opcoesCursos = cursos.map(c => {
-                    let id = c.idCurso || c.idcurso || c.id;
+                    let id = c.idCurso || c.idcurso || c.id || c.cod;
                     return `<option value="${id}">${c.curso || c.nome}</option>`;
                 }).join('');
                 
@@ -237,14 +237,14 @@
                 }
 
                 // Cria as opções (options) com base no JSON recebido
-                let opcoesAlunos = alunos.map(a => `<option value="${a.nome}">${a.nome}</option>`).join('');
-                let opcoesCursos = cursos.map(c => `<option value="${c.curso || c.nome}">${c.curso || c.nome}</option>`).join('');
+                let opcoesAlunos = alunos.map(a => `<option value="${a.matricula || a.id}">${a.nome}</option>`).join('');
+                let opcoesCursos = cursos.map(c => `<option value="${c.cod || c.id}">${c.curso || c.nome}</option>`).join('');
 
                 view.innerHTML = `
                     <h2>Fazer Matrícula</h2>
                     <form onsubmit="enviarFormulario(event, 'matriculas')">
-                        <p>Selecione o Aluno: <select name="aluno" required><option value="" disabled selected>Escolha um aluno...</option>${opcoesAlunos}</select></p>
-                        <p>Selecione o Curso: <select name="curso" required><option value="" disabled selected>Escolha um curso...</option>${opcoesCursos}</select></p>
+                        <p>Selecione o Aluno: <select name="aluno_id" required><option value="" disabled selected>Escolha um aluno...</option>${opcoesAlunos}</select></p>
+                        <p>Selecione o Curso: <select name="curso_id" required><option value="" disabled selected>Escolha um curso...</option>${opcoesCursos}</select></p>
                         <button type="submit">Efetivar Matrícula</button>
                     </form>
                 `;
@@ -265,6 +265,8 @@
             if (data.cod) data.cod = parseInt(data.cod);
             if (data.ch) data.ch = parseInt(data.ch);
             if (data.idCurso_aluno) data.idCurso_aluno = parseInt(data.idCurso_aluno);
+            if (data.aluno_id) data.aluno_id = parseInt(data.aluno_id);
+            if (data.curso_id) data.curso_id = parseInt(data.curso_id);
 
             try {
                 const response = await fetch(`/${rota}`, {
